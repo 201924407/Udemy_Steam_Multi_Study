@@ -10,10 +10,12 @@ void ALobbyGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
 	++NumberOfPlayers;
+	UE_LOG(LogTemp, Warning, TEXT("New Player Login NumberOfPlayers : %d"), NumberOfPlayers);
 
 	if (NumberOfPlayers >= 2)
 	{
-		GetWorldTimerManager().SetTimer(GameStartTimer, this, &ALobbyGameMode::StartGame, 10);
+		UE_LOG(LogTemp, Warning, TEXT("Starting game"));
+		GetWorldTimerManager().SetTimer(GameStartTimer, this, &ALobbyGameMode::StartGame, 5);
 	}
 }
 
