@@ -44,6 +44,11 @@ void UPuzzlePlatformsGameInstance::Init()
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Found no subsystem"));
 	}
+
+	if(GEngine != nullptr)
+	{
+		GEngine->OnNetworkFailure().AddUObject(this, &UPuzzlePlatformsGameInstance::OnNetworkInFailure);
+	}
 }
 
 void UPuzzlePlatformsGameInstance::LoadMenuWidget()
@@ -147,6 +152,11 @@ void UPuzzlePlatformsGameInstance::OnFindSessionsComplete(bool Success)
 		}
 		MMenu->SetServerList(ServerNames);
 	}
+}
+
+void UPuzzlePlatformsGameInstance::OnNetworkInFailure(UWorld* World, UNetDriver* NetDriver, ENetworkFailure::Type FailureType, const FString& ErrorString)
+{
+	LoadMainMenu();
 }
 
 void UPuzzlePlatformsGameInstance::RefreshServerList()
